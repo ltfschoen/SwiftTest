@@ -46,7 +46,7 @@ array.extend(5...10) // Extend array with sequence
 var i = 0
 for var i in array {
     if i % 2 == 0 {
-//        array.removeAtIndex(i)
+        array.removeAtIndex(i)
     }
     print(array)
     i++
