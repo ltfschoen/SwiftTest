@@ -6,6 +6,12 @@
 //
 // Progress: Page 56/XX (Ch3) / 257
 
+/* Readme:
+    - Class to hold Creatures
+    - Struct to hold Map Locations
+    - View Controller to add Creatures to Map Locations
+*/
+
 // Questions:
 /* - Why doesn't Xcode v7.0 beta 4 give error "Class 'xyz' has no initializers (i.e. p50, since a Class with Constants (Non-Optional Types) must be initialized with valid values)?
    - Why no compiler errors in initializer when code references properties that have been removed from the Class itself in Xcode v7.0 beta 4?
