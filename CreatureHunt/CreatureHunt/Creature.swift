@@ -25,18 +25,26 @@
 // Strings, Arrays, Dictionaries
 import Foundation
 
+// Import MapKit (MKMapView) to add annotations to the map conforming to the MKAnnotation Protocol
+import MapKit
+
 // Declaration of a Class (Function)
 // Declare Properties, Define Types, Set Values of Class (var/let)
-class Creature {
+// Declared so Class inherits from NSObject (since Class Extension uses MKAnnotation Protocol
+// MKAnnotation Protocol that interfaces with Objective-C code
+// (MKAnnotation Protocol inherits from NSObjectProtocol)
+class Creature: NSObject {
     let what: String
     let location: GeoLocation
 //    let latitude: Double
 //    let longitude: Double
 
     // Initializer of all variables in the Class for it to exist
-    init(what: String, latitude: Double, longitude: Double) {
+    init(what: String, location: GeoLocation) {
+//    init(what: String, latitude: Double, longitude: Double) {
         self.what = what
-        self.GeoLocation = GeoLocation
+        self.location = location
+//        self.GeoLocation = GeoLocation
 //        self.latitude = latitude
 //        self.longitude = longitude
     }
@@ -50,12 +58,35 @@ class Creature {
        let location = GeoLocation(latitude: latitude,
                                  longitude: longitude)
         self.init(what: what, location: location)
-                        
+    }
+
+//    func pinColor() -> MKPinAnnotationColor {
+//        return MKPinAnnotationColor.Red
+//    }
+
+    // pinTinColor instead of pinColor (deprecated)
+    // Note: Attempted to return UIColor type of redPinColor() differs from deprecated solution
+    func pinTintColor() -> UIColor {
+        return MKPinAnnotationView.redPinColor()
+    }
+
+}
+
+/*  Class Extension to spit up the Class into Logical Units for additional functionality. Uses 'import MapKit' to allow additional properties and methods. Logical Unit declared here is MKAnnotation Protocol conformance, requiring definition of two Computed Properties (not Functions) with associated code that are computed each time without using an instance variable.
+    Note: NSObjectProtocol conformance (part of Foundation framework) is also required since MKAnnotation inherits from it
+*/
+extension Creature: MKAnnotation {
+    var coordinate: CLLocationCoordinate2D {
+        return self.location.coordinate
+    }
+
+    var title: String? {
+        return self.what
     }
 }
 
 // Class Inheritance
-class historyCreature: Creature { // Declare Class to Inherit from Super Class
+class HistoryCreature: Creature { // Declare Class to Inherit from Super Class
     let year: Int
 
     init(what: String, year: Int, latitude: Double, longitude: Double)
@@ -66,10 +97,10 @@ class historyCreature: Creature { // Declare Class to Inherit from Super Class
     }
 }
 
-class protectedCreature: Creature {
-    let protected: String
+class ProtectedCreature: Creature {
+    let protected: Bool
     
-    init(what: String, protected: String, latitude: Double, longitude: Double)
+    init(what: String, protected: Bool, latitude: Double, longitude: Double)
     {
         self.protected = protected
         let location = GeoLocation(latitude: latitude, longitude: longitude)
@@ -77,15 +108,12 @@ class protectedCreature: Creature {
     }
 }
 
-class taggedCreature: Creature {
+class TaggedCreature: Creature {
     let tag: String
     
-    init(tag: String, latitude: Double, longitude: Double) {
+    init(what: String, tag: String, latitude: Double, longitude: Double) {
         self.tag = tag
         let location = GeoLocation(latitude: latitude, longitude: longitude)
-        super.init(what: tag + " (tag id)", location: location)
+        super.init(what: what + ": " + tag + " (tag id)", location: location)
     }
 }
-
-
-
