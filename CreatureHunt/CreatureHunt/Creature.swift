@@ -64,6 +64,7 @@ class Creature: NSObject {
 //        return MKPinAnnotationColor.Red
 //    }
 
+    // Default implementation of Polymorphism on map pin color. Sub Class override for different colour
     // pinTinColor instead of pinColor (deprecated)
     // Note: Attempted to return UIColor type of redPinColor() differs from deprecated solution
     func pinTintColor() -> UIColor {
@@ -72,7 +73,7 @@ class Creature: NSObject {
 
 }
 
-/*  Class Extension to spit up the Class into Logical Units for additional functionality. Uses 'import MapKit' to allow additional properties and methods. Logical Unit declared here is MKAnnotation Protocol conformance, requiring definition of two Computed Properties (not Functions) with associated code that are computed each time without using an instance variable.
+/*  Class Extension to split up the Class into Logical Units for additional functionality. Uses 'import MapKit' to allow additional properties and methods. Logical Unit declared here is MKAnnotation Protocol conformance, requiring definition of two Computed Properties (not Functions) with associated code that are computed each time without using an instance variable.
     Note: NSObjectProtocol conformance (part of Foundation framework) is also required since MKAnnotation inherits from it
 */
 extension Creature: MKAnnotation {
@@ -86,7 +87,7 @@ extension Creature: MKAnnotation {
 }
 
 // Class Inheritance
-class HistoryCreature: Creature { // Declare Class to Inherit from Super Class
+final class HistoryCreature: Creature { // Declare Class to Inherit from Super Class
     let year: Int
 
     init(what: String, year: Int, latitude: Double, longitude: Double)
@@ -95,25 +96,36 @@ class HistoryCreature: Creature { // Declare Class to Inherit from Super Class
         let location = GeoLocation(latitude: latitude, longitude: longitude)
         super.init(what: what, location: location) // Class Designated Initializer at end of method initializes fields declared in this class and then must call its Super Class Designated Initializer (not a Convenience Initializer). Super Class is not aware of other fields declared in Sub Classes so cannot overwrite them
     }
+
+    // Sub Class that overrides Default Implementation using Polymorphism
+    override func pinTintColor() -> UIColor {
+        return MKPinAnnotationView.purplePinColor()
+    }
 }
 
-class ProtectedCreature: Creature {
+final class ProtectedCreature: Creature {
     let protected: Bool
-    
+
     init(what: String, protected: Bool, latitude: Double, longitude: Double)
     {
         self.protected = protected
         let location = GeoLocation(latitude: latitude, longitude: longitude)
         super.init(what: what, location: location)
     }
+
+    // No Sub Class override method for pinTintColor so it will revert to default implementation of red
 }
 
-class TaggedCreature: Creature {
+final class TaggedCreature: Creature {
     let tag: String
-    
+
     init(what: String, tag: String, latitude: Double, longitude: Double) {
         self.tag = tag
         let location = GeoLocation(latitude: latitude, longitude: longitude)
         super.init(what: what + ": " + tag + " (tag id)", location: location)
+    }
+
+    override func pinTintColor() -> UIColor {
+        return MKPinAnnotationView.greenPinColor()
     }
 }
