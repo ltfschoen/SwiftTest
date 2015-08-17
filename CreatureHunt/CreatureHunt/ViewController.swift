@@ -23,10 +23,11 @@ class ViewController: UIViewController {
 
     @IBOutlet var mapView : MKMapView! // Interface Builder outlet for MKMapView
 
-    var creatures: [Creature] = [] // Declare and initialise Array property
+    // Properties to maintain local state should be private so not acccessible from outside
+    private var creatures: [Creature] = [] // Declare and initialise Array property
 
-    var foundLocations: [GeoLocation] = [] // Declare and initialise Array property to hold array of GeoLocation structs to track the order that creatures are found by user
-    var polyline: MKPolyline! // Declare and initialise property to hold an MKPolyline (overlay line on map to show set of points found by user) with the type being an implicitly unwrapped Optional (allowing a nil value before user has found any creatures)
+    private var foundLocations: [GeoLocation] = [] // Declare and initialise Array property to hold array of GeoLocation structs to track the order that creatures are found by user
+    private var polyline: MKPolyline! // Declare and initialise property to hold an MKPolyline (overlay line on map to show set of points found by user) with the type being an implicitly unwrapped Optional (allowing a nil value before user has found any creatures)
 
     // Overriding Method to override behaviour of superclass Existing Method (ViewController)
     // View Controller calls after app has loaded the View. Customise View here.
@@ -60,7 +61,8 @@ class ViewController: UIViewController {
 
     }
 
-    func markCreatureAsFound(creature: Creature) {
+    // View Controller uses this to handle user tapping Found button so want private setting of creature state (to prevent cheating)
+    private func markCreatureAsFound(creature: Creature) {
         // Check to see if location already exists in found locations array
         // find() takes collection and element to find as arguments. Returns index where found or nil
         if let index = self.foundLocations.indexOf(creature.location) {
