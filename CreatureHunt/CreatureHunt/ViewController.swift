@@ -63,6 +63,7 @@ class ViewController: UIViewController {
 
 // Class Extension
 // Purpose: Make ViewController conform to MKMapViewDelegate protocol so may be Delegate for map view
+// Delegate Method is called when user taps the pin or pin callout button (i)
 extension ViewController: MKMapViewDelegate {
     /* Implements mapView:viewForAnnotation to return view associated with specified annotation object. Pass in annotation of type MKAnnotation! (an Optional, so value may be nil, it is implicitly unwrapped so may be used without checking for nil but app will crash if it is nil). Note: Objective-C APIs are wrapped in this manner since it does not support Optionals like Swift
     */
@@ -93,5 +94,23 @@ extension ViewController: MKMapViewDelegate {
             return view
         }
         return nil
+    }
+
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        // Inline Downcast annotation of view to a Creature
+        if let creature = view.annotation as? Creature {
+            // Inline Downcast Creature to check it conforms to Alertable
+            if let alertable = creature as? Alertable {
+                // Display Creature alert dialog with OK button when tap callout (i) button
+                let alert = alertable.alert()
+                alert.addAction(
+                    UIAlertAction(
+                        title: "OK",
+                        style: UIAlertActionStyle.Default,
+                        handler: nil)
+                )
+                self.presentViewController(alert, animated: true, completion: nil)
+            }
+        }
     }
 }

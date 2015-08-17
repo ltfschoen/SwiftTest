@@ -28,6 +28,12 @@ import Foundation
 // Import MapKit (MKMapView) to add annotations to the map conforming to the MKAnnotation Protocol
 import MapKit
 
+// Declare Protocol for conformance by all Sub Classes
+@objc protocol Alertable {
+    // alert() returns Alert Controller from View Controller when callout box pressed of tapped pin
+    func alert() -> UIAlertController
+}
+
 // Declaration of a Class (Function)
 // Declare Properties, Define Types, Set Values of Class (var/let)
 // Declared so Class inherits from NSObject (since Class Extension uses MKAnnotation Protocol
@@ -127,5 +133,35 @@ final class TaggedCreature: Creature {
 
     override func pinTintColor() -> UIColor {
         return MKPinAnnotationView.greenPinColor()
+    }
+}
+
+extension HistoryCreature: Alertable {
+    func alert() -> UIAlertController {
+        let alert = UIAlertController(
+            title: "History",
+            message: "From \(self.year):\n\(self.what)",
+            preferredStyle: UIAlertControllerStyle.Alert) // Modal Alert
+        return alert
+    }
+}
+
+extension ProtectedCreature: Alertable {
+    func alert() -> UIAlertController {
+        let alert = UIAlertController(
+            title: "Protected",
+            message: "From \(self.what):\n\(self.protected)",
+            preferredStyle: UIAlertControllerStyle.Alert) // Modal Alert
+        return alert
+    }
+}
+
+extension TaggedCreature: Alertable {
+    func alert() -> UIAlertController {
+        let alert = UIAlertController(
+            title: "Tagged",
+            message: "Tagged \(self.what):\n\(self.tag)",
+            preferredStyle: UIAlertControllerStyle.Alert) // Modal Alert
+        return alert
     }
 }
