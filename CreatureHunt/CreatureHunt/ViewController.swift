@@ -5,12 +5,14 @@
 // Created by LS on 15/08/2015.
 // Copyright © 2015 LS. All rights reserved.
 //
-// Progress: Page 65/XX (Ch3) / 257
+// Progress: Page 68/XX (Ch3) / 257
 //
 // Questions:
 //
 /* - Why does using ? and ! in the following code snippet as directed result in error? 'func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {'
    - Why on page 61 doesn't it mention to define pinTintColor() in Treasure.swift in order to overcome error message saying it is not used (we aren't told to use pinColor until page 64)? Note that pinColor() used in the code solutions is deprecated now but when I apply updates I get an error 'fatal error: unexpectedly found nil while unwrapping an Optional value', what is causing this? Lack of internet connection to load the maps?
+   - Why does using ! as directed on page 67 cause warning 'func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {' ?
+   - Why get error 'String is not convertible to StringLiteralConvertible' with code snippet 'alert.addAction(UIAlertAction(title: "Find Closest",' from page 69 ?
 */
 
 import UIKit
@@ -109,6 +111,27 @@ extension ViewController: MKMapViewDelegate {
                         style: UIAlertActionStyle.Default,
                         handler: nil)
                 )
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Find Closest",
+                        style: UIAlertViewStyle.Default)
+                    { action in
+                            var sortedCreatures = self.creatures // Local variable hold copy of array
+                            // Sort Method takes single parameter (Closure taking two objects, returns Boolean if an object is before another)
+                            sortedCreatures.sortInPlace({ // Closure
+                                /*  Calc distance b/w current creature and each creature being sorted. Shorthand syntax $0 and $1 represents 1st and 2nd params passed into closure
+                                */
+                                let distanceA = creature.location.distanceBetween($0.location)
+                                let distanceB = creature.location.distanceBetween($1.location)
+                                // Sort array of creatures in order from shortest to longest distance from current creature
+                                return distanceA < distanceB
+                            })
+                            /* Deselect current creature. Select new creature (2nd elem in sorted array since 1st elem is current creature)
+                            */
+                            mapView.deselectAnnotation(creature, animated: true)
+                            mapView.selectAnnotation(sortedCreatures[1], animated: true)
+                    } // end UIAlertAction block
+                ) // end alert.addAction
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
