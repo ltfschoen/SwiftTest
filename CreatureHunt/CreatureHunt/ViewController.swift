@@ -11,8 +11,9 @@
 //
 /* - Why does using ? and ! in the following code snippet as directed result in error? 'func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {'
    - Why on page 61 doesn't it mention to define pinTintColor() in Treasure.swift in order to overcome error message saying it is not used (we aren't told to use pinColor until page 64)? Note that pinColor() used in the code solutions is deprecated now but when I apply updates I get an error 'fatal error: unexpectedly found nil while unwrapping an Optional value', what is causing this? Lack of internet connection to load the maps?
-   - Why does using ! as directed on page 67 cause warning 'func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {' ?
+   - Why does using ! as directed on page 67 cause warning (i.e. 'func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {') ?
    - Why get error 'String is not convertible to StringLiteralConvertible' with code snippet 'alert.addAction(UIAlertAction(title: "Find Closest",' from page 69 ?
+   - Why error that says 'find cannot be used and to use indexOf instead' when using code from page 73 'if let index = find(self.foundLocations, creature.location) {' ? The code compiles when change code to 'if let index = self.foundLocations.indexOf(creature.location) {'
 */
 
 import UIKit
@@ -23,6 +24,9 @@ class ViewController: UIViewController {
     @IBOutlet var mapView : MKMapView! // Interface Builder outlet for MKMapView
 
     var creatures: [Creature] = [] // Declare and initialise Array property
+
+    var foundLocations: [GeoLocation] = [] // Declare and initialise Array property to hold array of GeoLocation structs to track the order that creatures are found by user
+    var polyline: MKPolyline! // Declare and initialise property to hold an MKPolyline (overlay line on map to show set of points found by user) with the type being an implicitly unwrapped Optional (allowing a nil value before user has found any creatures)
 
     // Overriding Method to override behaviour of superclass Existing Method (ViewController)
     // View Controller calls after app has loaded the View. Customise View here.
@@ -56,6 +60,39 @@ class ViewController: UIViewController {
 
     }
 
+    func markCreatureAsFound(creature: Creature) {
+        // Check to see if location already exists in found locations array
+        // find() takes collection and element to find as arguments. Returns index where found or nil
+        if let index = self.foundLocations.indexOf(creature.location) {
+            let alert = UIAlertController(
+                title: "Oops!",
+                message: "Already found this Creature (at step \(index + 1)! Try again!",
+                preferredStyle: .Alert)
+            alert.addAction(
+                UIAlertAction(
+                    title: "OK",
+                    style: .Default,
+                    handler: nil
+                )
+            )
+            self.presentViewController(alert, animated: true, completion: nil)
+        } else {
+            // Add location to found locations array if it does not already exist in it
+            self.foundLocations.append(creature.location)
+
+            // Remove any existing polyline from map to prevent too many overlaying
+            if self.polyline != nil {
+                self.mapView.removeOverlay(self.polyline)
+            }
+
+            /* Create new MKPolyline and add it to map view. The .map function passes each element in array into supplied closure (as $0 variable) for conversion and creates new array with results. Short syntax for Closures (signature not included since Swift can infer it from the .map function signature.
+            */
+            var coordinates = self.foundLocations.map { $0.coordinate }
+            self.polyline = MKPolyline(coordinates: &coordinates, count: coordinates.count)
+            self.mapView.addOverlay(self.polyline)
+        }
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -69,7 +106,7 @@ class ViewController: UIViewController {
 extension ViewController: MKMapViewDelegate {
     /* Implements mapView:viewForAnnotation to return view associated with specified annotation object. Pass in annotation of type MKAnnotation! (an Optional, so value may be nil, it is implicitly unwrapped so may be used without checking for nil but app will crash if it is nil). Note: Objective-C APIs are wrapped in this manner since it does not support Optionals like Swift
     */
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
         /* 'if statement' will only pass if Inline Downcast of the annotation to Creature occurs without error (since annotation could be nil or non-Creature instance)
         */
         if let creature = annotation as? Creature {
@@ -98,7 +135,7 @@ extension ViewController: MKMapViewDelegate {
         return nil
     }
 
-    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
         // Inline Downcast annotation of view to a Creature
         if let creature = view.annotation as? Creature {
             // Inline Downcast Creature to check it conforms to Alertable
@@ -111,11 +148,18 @@ extension ViewController: MKMapViewDelegate {
                         style: UIAlertActionStyle.Default,
                         handler: nil)
                 )
+                // Display Creature alert dialog with Found that they can tap when creature is found
+                alert.addAction(
+                    UIAlertAction(
+                        title: "Found",
+                        style: UIAlertActionStyle.Default) { action in
+                            self.markCreatureAsFound(creature)
+                        }
+                )
                 alert.addAction(
                     UIAlertAction(
                         title: "Find Closest",
-                        style: UIAlertViewStyle.Default)
-                    { action in
+                        style: UIAlertViewStyle.Default) { action in
                             var sortedCreatures = self.creatures // Local variable hold copy of array
                             // Sort Method takes single parameter (Closure taking two objects, returns Boolean if an object is before another)
                             sortedCreatures.sortInPlace({ // Closure
@@ -130,10 +174,21 @@ extension ViewController: MKMapViewDelegate {
                             */
                             mapView.deselectAnnotation(creature, animated: true)
                             mapView.selectAnnotation(sortedCreatures[1], animated: true)
-                    } // end UIAlertAction block
+                        } // end UIAlertAction style block
                 ) // end alert.addAction
                 self.presentViewController(alert, animated: true, completion: nil)
             }
         }
+    }
+
+    // Render an overlay (overlay MKPolyline has renderer MKPolylineRenderer) of a map view
+    func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
+        // Inline Downcast overlay type to MKPolyline for Optional checking
+        if let polylineOverlay = overlay as? MKPolyline {
+            let renderer = MKPolylineRenderer(polyline: polylineOverlay)
+            renderer.strokeColor = UIColor.blueColor()
+            return renderer
+        }
+        return nil
     }
 }

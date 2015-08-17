@@ -4,7 +4,7 @@
 //
 // Created by LS on 14/08/2015.
 //
-// Progress: Page 59/XX (Ch3) / 257
+// Progress: Page 73/XX (Ch3) / 257
 
 import MapKit
 
@@ -30,4 +30,16 @@ extension GeoLocation {
     var mapPoint: MKMapPoint {
         return MKMapPointForCoordinate(self.coordinate)
     }
+}
+
+/* Extension for Operator Overloads. Declare Operator Overload in global scope (since not methods that belong to a class and == operator may be used anywhere)
+*/
+extension GeoLocation: Equatable {
+}
+
+/* Implementation of Operator Overload that checks equality between latitude and longtitude. The type of the two parameters are instances of the class being compared (GeoLocation)
+*/
+func ==(lhs: GeoLocation, rhs: GeoLocation) -> Bool {
+    return lhs.latitude == rhs.latitude &&
+           lhs.longitude == rhs.longitude
 }
