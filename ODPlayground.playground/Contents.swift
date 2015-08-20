@@ -10,6 +10,7 @@
 // Questions:
 //
 // - What does copy-on-write mean in relation to mutable Structs?
+// - Why does 'extension OrderedDictionary: SequenceType { ...' result in error 'OrderedDictionary<KeyType, ValueType> does not conform to SequenceType Protocol' on page 98?
 
 import Foundation
 
@@ -18,7 +19,7 @@ import Foundation
 /* Constrained Generic Type Parameter to conform to a Protocol depending on usage. In this case the type passed for KeyType for OrderedDictionary must conform to Hashable Protocol to be acceptable to hash keys for underlying dictionary in implementation.
 */
 struct OrderedDictionary<KeyType: Hashable, ValueType> {
-    
+
     /* Implement an Ordered Dictionary with:
     - Array to hold order of Keys
     - Dictionary to hold Mapping
@@ -140,6 +141,34 @@ struct OrderedDictionary<KeyType: Hashable, ValueType> {
     }
 }
 
+/* Extension defined so OrderedDictionary conforms to SequenceType Protocol (that defined a GeneratorType typealias, which is a type that conforms to Generator). It allows the type to be iterated with For..In Loop
+*/
+extension OrderedDictionary: SequenceType {
+    
+    /* Swift Standard Library includes a struct (Generic on type of object it returns) called GeneratorOf takes and executes a given closure each time next() is called
+    */
+    typealias GenerateType = GeneratorOf<(KeyType, ValueType)>
+    
+    /* Set the Generic Type Parameter to a tuple of KeyType and ValueType. Implement generate() to conform to SequenceType Protocol. Store current index in index variable (starts at index = 0) for desired iterations. Return a GenerateOf (which calls initialiser of GenerateOf! and takes the closure as the single parameter to be called each time next() is called) and generates over elements of sequence
+    */
+    func generate() -> GeneratorOf<(KeyType, ValueType)> {
+        var index = 0
+        
+        return GeneratorOf {
+            // Generator Closure checks that index is not out-of-bounds of array
+            if index < self.array.count {
+                // Return Key and Value and increment index for next call to next()
+                let key = self.array[index++]
+                return (key, self.dictionary[key]!)
+            } else {
+                // Return nil to signify index is out-of-bounds (end of iterations)
+                return nil
+            }
+        }
+    }
+}
+
+// Example Implementation
 var dict = OrderedDictionary<Int, String>()
 dict.insert("dog", forKey: 1, atIndex: 0)
 dict.insert("cat", forKey: 2, atIndex: 1)
@@ -154,3 +183,7 @@ print(byIndex)
 
 var byKey: String? = dict[2]
 print(byKey)
+
+for (key, value) in dict {
+    println("\(key) => \(value)")
+}
