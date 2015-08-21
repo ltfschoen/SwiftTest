@@ -1,3 +1,9 @@
+// Progress: Page 114
+//
+// Questions:
+//
+// - Same as countElements question from VariadicFnParams.playground
+
 import Foundation
 
 // countElements function here
