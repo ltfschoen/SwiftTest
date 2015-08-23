@@ -7,3 +7,26 @@
 //
 
 import Foundation
+
+class Person {
+    let name: String
+    private let actionClosure: (() -> ())!
+
+    init(name: String) {
+
+        self.name = name
+
+        actionClosure = {
+            () -> () in
+            print("I am \(self.name)")
+        }
+    }
+
+    func performAction() {
+        actionClosure()
+    }
+
+    deinit {
+        print("\(name) is being deinitialized")
+    }
+}
