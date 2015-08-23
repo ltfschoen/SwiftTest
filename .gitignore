@@ -1,10 +1,8 @@
-/**/*.DS_Store
-/**/*.xcplayground
-/**/*.xcworkspace
-/**/*.xctimeline
-/**/*.xcassets
-/**/*.lproj
-/**/*.plist
-/**/*.pbxproj
-/**/*.xcworkspacedata
-/**/*.xcuserdatad
+*.DS_Store
+
+ODPlayground.playground/*
+!ODPlayground.playground/Contents.swift
+
+Memory Leak Test/*
+!Memory Leak Test/Memory Leak Test/Person.swift
+!Memory Leak Test/Memory Leak Test/ViewController.swift
