@@ -2,7 +2,7 @@
 //
 // Questions:
 //
-// -
+// - Why is semi-colon used 'let result = stepTwo(three: 4);' on page 168?
 
 /* Purpose: Use of Partial Application to process delimited data (traditionally using numerous 'split' steps
 */
@@ -43,3 +43,33 @@ print(commaSplitter(source: data))
 let semiColonSplitter = createSplitter(";")
 print(commaSplitter(source: data))
 //print(semiColonSplitter(data))
+
+// Example: Function that adds three given integers
+
+// Imperative Approach
+func addNumbers(one: Int, two: Int, three: Int) -> Int {
+    return one + two + three
+}
+
+let sum = addNumbers(2, two: 5, three: 4)
+print(sum)
+
+/* Currying Approach - Mechanism that executes a sequence of functions with each returning a new function where the provided parameter values are "fixed" and without assigning each step to a variable or constant
+*/
+func curryAddNumbers(one:Int)(two:Int)(three:Int) -> Int {
+    return one + two + three
+}
+
+let result2 = curryAddNumbers(2)(two: 5)(three: 4)
+print(result2)
+//let stepOne = curryAddNumbers(2)
+//let stepTwo = stepOne(two: 5)
+//let result = stepTwo(three: 4);
+//print(result)
+
+// Example of "fixing" more than one parameter at each step of function sequence when using Currying
+func curryAndNumbers2(one: Int, two: Int)(three: Int) -> Int {
+    return one + two + three
+}
+let result3 = curryAndNumbers2(2, two: 5)(three: 4)
+print(result3)
