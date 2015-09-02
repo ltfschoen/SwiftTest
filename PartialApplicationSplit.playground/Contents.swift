@@ -73,3 +73,20 @@ func curryAndNumbers2(one: Int, two: Int)(three: Int) -> Int {
 }
 let result3 = curryAndNumbers2(2, two: 5)(three: 4)
 print(result3)
+
+// Padding Traditional Approach (i.e. to Strings)
+let text = "Swift"
+let paddedText = text.stringByPaddingToLength(10, withString: ".", startingAtIndex: 0)
+print(paddedText)
+
+// Padding with Currying Approach - takes two params and length and returns padded string
+func curriedPadding(startingAtIndex: Int, withString: String)
+    (source: String, length: Int) -> String {
+    return source.stringByPaddingToLength(length, withString: withString, startingAtIndex: startingAtIndex)
+}
+
+// Invoke the Curried Function (providing the two params: start index and padding string)
+let dotPadding = curriedPadding(0, withString: ".,-'-,.")
+
+let dotPadded = dotPadding(source: "Curry Test", length: 30)
+print(dotPadded)
