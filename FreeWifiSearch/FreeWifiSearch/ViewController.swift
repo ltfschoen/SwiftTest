@@ -11,6 +11,11 @@ import MapKit
 
 class ViewController: UIViewController {
 
+    /* Property Declarations that hook variables in Interface Builder (IB). IBOutlets are set implicitly unwrapped as Optional Type prefixed with ! (so IBOutlets may be used without checking for nil but runtime crash will occur if value is nil) since IB supplies Views at Runtime the Swift Compiler does not know and would give error that variables values not set in all initializers, so do not use an IBOutlet before the View of the ViewController has loaded. IBOutlets are declared as weak by default since the View of a ViewController holds Strong References to its outlets
+    */
+    @IBOutlet weak var mapview: MKMapView!
+    @IBOutlet weak var loginView: FBLoginView! // FBLoginView instead of UIView
+
     private var locationManager: CLLocationManager!
 
     override func viewDidLoad() {
