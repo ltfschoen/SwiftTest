@@ -6,6 +6,13 @@
 //  Copyright © 2015 LS. All rights reserved.
 //
 
+// Progress: Page 183
+
+/* Questions:
+   - Why the postfixes of "!" required in code "func mapView(mapView: MKMapView!, didFailToLocateUserWithError error: NSError!) {" on page 180?
+   - Why warning "Value of Optional type CLLocation not unwrapped, consider adding ! at the end"  that requires changing to code to "self.centerMapOnLocation(newLocation!)" and "self.fetchFreeWifisAroundLocation(newLocation!)", even though no ! is shown on page 181?
+*/
+
 import UIKit
 import MapKit
 
@@ -19,7 +26,7 @@ class ViewController: UIViewController {
 
     /* Property Declarations that hook variables in Interface Builder (IB). IBOutlets are set implicitly unwrapped as Optional Type prefixed with ! (so IBOutlets may be used without checking for nil but runtime crash will occur if value is nil) since IB supplies Views at Runtime the Swift Compiler does not know and would give error that variables values not set in all initializers, so do not use an IBOutlet before the View of the ViewController has loaded. IBOutlets are declared as weak by default since the View of a ViewController holds Strong References to its outlets
     */
-    @IBOutlet weak var mapview: MKMapView!
+    @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var loginView: FBLoginView! // FBLoginView instead of UIView
 
     private var locationManager: CLLocationManager!
@@ -46,9 +53,47 @@ class ViewController: UIViewController {
 
     private func checkLocationAuthorizationStatus() {
         if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+
+            // Display the User's Location if User has provided authorisation
+            self.mapView.showsUserLocation = true
+
         } else {
             self.locationManager.requestWhenInUseAuthorization()
         }
+    }
+
+    // Centers Map View on location passed in as a parameter
+    private func centerMapOnLocation(location: CLLocation) {
+
+        /* Visible extent of map region is defined based on searchDistance constant (sized sufficiently to display all Free Wifi Hotspots
+        */
+        let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
+                                                                  searchDistance,
+                                                                  searchDistance)
+
+        // Change currently visible region (of MKCoordinateRegion type) and animates the change
+        self.mapView.setRegion(coordinateRegion, animated: true)
+    }
+
+    /* Stub Method displays error when Facebook Session not open (User not logged in) since Facebook Graph API requires a User Access Token to allow the app to fetch the data it needs and as such the user must first Login to Facebook
+    */
+    private func fetchFreeWifisAroundLocation(location: CLLocation) {
+
+        if !FBSession.activeSession().isOpen {
+
+            let alert = UIAlertController(title: "Error", message: "Access Denied. Please Login...", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK",
+                                          style: .Default,
+                                          handler: nil))
+
+            self.presentViewController(alert, animated: true, completion: nil)
+
+            return
+
+        }
+
+        // TODO
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -75,7 +120,7 @@ extension ViewController: MKMapViewDelegate {
 
     /* Tell Map View attempt to get User's Location fails to update (i.e. GPS failure) and show alert
     */
-    func mapView(mapView: MKMapView, didFailToLocateUserWithError error: NSError) {
+    func mapView(mapView: MKMapView!, didFailToLocateUserWithError error: NSError!) {
 
         print(error)
 
@@ -86,6 +131,31 @@ extension ViewController: MKMapViewDelegate {
 
         // Modally present the ViewController
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+
+    // Called when Map View updates User's Location
+    func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
+
+        /* Retrieve new location from MKMapViewDelegate's method userLocation that is an annotation object of CLLocation type (lat/long) representing User's Current location that returns nil if User's location is yet to be determined or if owning MKMapView's showsUserLocation is NO (i.e. User has not authorized use of their location)
+        */
+        let newLocation = userLocation.location
+
+        /* Return distance from current location to the last location stored, where the lastLocation is an Optional Property Value as its value may be nil. If lastLocation is nil then nil is returned and processing stops, else distanceFromLocation is called on lastLocation.
+           Without the use of Optionals we would have to decipher between when no distance value exists (nil) and when the distance value is 0
+            i.e.
+              if self.lastLocation != nil {
+                let distance = self.lastLocation.distanceFromLocation(newLocation)
+              }
+        */
+        let distance = self.lastLocation?.distanceFromLocation(newLocation!)
+
+        /* When no previous lastLocation or if User has moved more than the defined searchDistance radius we store the latest location and trigger an Auto Refresh by centering map on the new location and fetching nearby free wifi hotspots
+        */
+        if distance == nil || distance! > searchDistance {
+            self.lastLocation = newLocation
+            self.centerMapOnLocation(newLocation!)
+            self.fetchFreeWifisAroundLocation(newLocation!)
+        }
     }
 
 }
