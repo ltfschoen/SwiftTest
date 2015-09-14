@@ -14,7 +14,7 @@ import MapKit
 
 /* Class Object Properties to Fetch Data from FB Graph API. Each Class Object instance to be shown as annotations on Map View (enabled through inclusion of an extension to achieve conformance to MKAnnotations Protocol).
 */
-class FreeWifi: NSObject {
+class FreeWifiHotspot: NSObject {
 
     let fbid: String
     let name: String
@@ -34,7 +34,7 @@ class FreeWifi: NSObject {
 
 /* Extension to achieve conformance to MKAnnotations Protocol. MKAnnotations Protocol maps 'title' and 'coordinate' Computed Properties to the 'name' and 'location' Properties of the Class Object
 */
-extension FreeWifi: MKAnnotation {
+extension FreeWifiHotspot: MKAnnotation {
 
     var title: String! {
         return name
