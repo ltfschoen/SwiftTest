@@ -19,6 +19,8 @@
    - When use the JSONObjectWithData it shows the following in the autocomplete annotation popup
        JSONObjectWithData(data: NSData, options: NSJSONReadingOptions) throws
     ... but after pressing Tab why doesn't it add Swifts optional "error: &error" parameter shown on page 187 for use with Cocoa APIs?
+   - Why do I get error "Extra argument 'error' in call" when using the following code, and why do they choose to instead use a separate do/catch block to cater for any errors in the solution code, as this is not mentioned in tbe book on page 187 or 188 in the Fetching Data from Facebook section:
+       let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
 */
 
 import UIKit
@@ -123,7 +125,7 @@ class ViewController: UIViewController {
         let request = NSURLRequest(URL: url)
 
         // Interface controls to start and cancel async loads of specific URL requested
-        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse!, data: NSData!, error: NSError!) -> Void in
+        NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
 
             // Completion Handler Block
 
@@ -145,9 +147,18 @@ class ViewController: UIViewController {
             // JSON Deserialisation of Data from Facebook Graph API
             var error: NSError?
 
-            /* Error parameter traditionally used as common pattern in Objective-C Cocoa development for interfacing with Cocoa APIs is optional in Swift and caters for the fact that Methods cannot return multiple values. Pass to the Method a Pointer reference to an Optional NSError (error variable) object so a Reference to an error (if any) may be assigned. NSJSONSerialization returns an NSDictionary.
+            /* Error parameter traditionally used as common pattern in Objective-C Cocoa development for interfacing with Cocoa APIs is optional in Swift and caters for the fact that Methods cannot return multiple values. Pass to the Method a Pointer reference to an Optional NSError (error variable) object so a Reference to an error (if any) may be assigned. NSJSONSerialization returns an NSDictionary. Instead of using extra parameter "error: &error" we use a do/catch block
             */
-            let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+            let jsonObject: AnyObject!
+
+            do {
+                jsonObject = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions(rawValue: 0))
+            } catch var error1 as NSError {
+                error = error1
+                jsonObject = nil
+            } catch {
+                fatalError()
+            }
 
             /* Attempt to Downcast jsonObject variable into a dictionary of String to AnyObject without error to confirm retrieval of valid data from API. Expect Facebook Graph API return value from JSON deserialisation to be JSON Object.
             */
@@ -172,9 +183,9 @@ class ViewController: UIViewController {
                         }
 
                         // Remove existing Free Wifi Hotspots from Map and Replace with new Free Wifi Hotspots
-                        self.mapView.removeAnnotation(self.freeWifiHotspots)
+                        self.mapView.removeAnnotations(self.freeWifiHotspots)
                         self.freeWifiHotspots = freeWifiHotspots
-                        self.mapView.addAnnotation(freeWifiHotspots)
+                        self.mapView.addAnnotations(freeWifiHotspots)
 
                     }
                 }
