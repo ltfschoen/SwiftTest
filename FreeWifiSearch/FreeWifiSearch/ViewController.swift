@@ -50,6 +50,9 @@ class ViewController: UIViewController {
     private var freeWifiHotspots = [FreeWifiHotspot]()
 
     override func viewDidLoad() {
+
+        print("ViewController.swift - Loading viewDidLoad overrides")
+
         super.viewDidLoad()
 
         self.locationManager = CLLocationManager()
@@ -60,18 +63,27 @@ class ViewController: UIViewController {
     }
 
     override func viewDidAppear(animated: Bool) {
+
+        print("ViewController.swift - Loading viewDidAppear overrides")
+
         super.viewDidAppear(animated)
 
         self.checkLocationAuthorizationStatus()
     }
 
     private func checkLocationAuthorizationStatus() {
+
         if CLLocationManager.authorizationStatus() == .AuthorizedWhenInUse {
+
+            print("ViewController.swift - Location Auth Status is true")
 
             // Display the User's Location if User has provided authorisation
             self.mapView.showsUserLocation = true
 
         } else {
+
+            print("ViewController.swift - Location Auth Status is false")
+
             self.locationManager.requestWhenInUseAuthorization()
         }
     }
@@ -121,6 +133,8 @@ class ViewController: UIViewController {
 
         // Convert String to NSURL
         let url = NSURL(string: urlString)!
+
+        print("Requesting from Facebook with URL: \(url)")
 
         let request = NSURLRequest(URL: url)
 
