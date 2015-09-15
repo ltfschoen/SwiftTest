@@ -21,6 +21,7 @@
     ... but after pressing Tab why doesn't it add Swifts optional "error: &error" parameter shown on page 187 for use with Cocoa APIs?
    - Why do I get error "Extra argument 'error' in call" when using the following code, and why do they choose to instead use a separate do/catch block to cater for any errors in the solution code, as this is not mentioned in tbe book on page 187 or 188 in the Fetching Data from Facebook section:
        let jsonObject: AnyObject! = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions(0), error: &error)
+   - Why does the code block "if !FBSession.activeSession().isOpen { }" contain a "return" statement, as it prevents the subsequent code from being run (such as building urlString to allow the user to login to Facebook)? Shouldn't this "return" statement be removed and the existing "if" statement be extended with an "else" statement containing the rest of the code in the method "fetchCafesAroundLocation" ?
 */
 
 import UIKit
@@ -91,6 +92,8 @@ class ViewController: UIViewController {
     // Centers Map View on location passed in as a parameter
     private func centerMapOnLocation(location: CLLocation) {
 
+        print("ViewController.swift - Centering on Map Location\n\(location.coordinate.latitude) & \(location.coordinate.longitude)")
+
         /* Visible extent of map region is defined based on searchDistance constant (sized sufficiently to display all Free Wifi Hotspots
         */
         let coordinateRegion = MKCoordinateRegionMakeWithDistance(location.coordinate,
@@ -106,6 +109,8 @@ class ViewController: UIViewController {
     private func fetchFreeWifiHotspotsAroundLocation(location: CLLocation) {
 
         if !FBSession.activeSession().isOpen {
+
+            print("ViewController.swift - No Facebook Session detected")
 
             let alert = UIAlertController(title: "Error", message: "Access Denied. Please Login...", preferredStyle: .Alert)
             alert.addAction(UIAlertAction(title: "OK",
@@ -139,6 +144,8 @@ class ViewController: UIViewController {
         let request = NSURLRequest(URL: url)
 
         // Interface controls to start and cancel async loads of specific URL requested
+        /* Note: Info.plist updated to overcome error "NSURLSession/NSURLConnection HTTP load failed" by adding new key NSAppTransportSecurity nested dictionary containining NSAllowsArbitraryLoads with a value of true (iOS9 exclusive HTTPS use to enforce secure connection)
+        */
         NSURLConnection.sendAsynchronousRequest(request, queue: NSOperationQueue.mainQueue()) { (response: NSURLResponse?, data: NSData?, error: NSError?) -> Void in
 
             // Completion Handler Block
@@ -220,6 +227,9 @@ extension ViewController: CLLocationManagerDelegate {
 
     // Communicates to Delegate that authorization status for app changed
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+
+        print("ViewController.swift - Authorisation Status Changed")
+
         self.checkLocationAuthorizationStatus()
     }
 
@@ -233,7 +243,7 @@ extension ViewController: MKMapViewDelegate {
     */
     func mapView(mapView: MKMapView!, didFailToLocateUserWithError error: NSError!) {
 
-        print(error)
+        print("ViewController.swift - Failed to Locate User with Error:\n\(error)")
 
         let alert = UIAlertController(title: "Error", message: "Unable to obtain User's Location", preferredStyle: .Alert)
 
@@ -247,6 +257,8 @@ extension ViewController: MKMapViewDelegate {
     // Called when Map View updates User's Location
     func mapView(mapView: MKMapView!, didUpdateUserLocation userLocation: MKUserLocation!) {
 
+        print("ViewController.swift - Updating the User Map Location to:\n\(userLocation.location?.coordinate.latitude) & \(userLocation.location?.coordinate.longitude)")
+
         /* Retrieve new location from MKMapViewDelegate's method userLocation that is an annotation object of CLLocation type (lat/long) representing User's Current location that returns nil if User's location is yet to be determined or if owning MKMapView's showsUserLocation is NO (i.e. User has not authorized use of their location)
         */
         let newLocation = userLocation.location
@@ -259,6 +271,8 @@ extension ViewController: MKMapViewDelegate {
               }
         */
         let distance = self.lastLocation?.distanceFromLocation(newLocation!)
+
+        print("ViewController.swift - Updating the User Map Location with Distance:\n\(distance)")
 
         /* When no previous lastLocation or if User has moved more than the defined searchDistance radius we store the latest location and trigger an Auto Refresh by centering map on the new location and fetching nearby free wifi hotspots
         */
