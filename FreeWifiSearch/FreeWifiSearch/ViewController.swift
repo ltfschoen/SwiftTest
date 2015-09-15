@@ -123,6 +123,8 @@ class ViewController: UIViewController {
 
         }
 
+        print("ViewController.swift - Facebook Session detected")
+
         // Fetch Free Wifi Hotspots from Facebook
 
         /* Construct URL (using String Interpolation) to Fetch nearby Free Wifi Locations matching search term "free wifi"
@@ -198,7 +200,11 @@ class ViewController: UIViewController {
                         for freeWifiHotspotJSON in data {
                             if let freeWifiHotspotJSON = freeWifiHotspotJSON.object {
 
-                                // TODO
+                                /* Use fromJSON Method in FreeWifiHotspot.swift to Parse the JSON Data and Append the New freeWifiHotspot Object to the Array of freeWifiHotspots
+                                */
+                                if let freeWifiHotspot = FreeWifiHotspot.fromJSON(freeWifiHotspotJSON) {
+                                    freeWifiHotspots.append(freeWifiHotspot)
+                                }
 
                             }
                         }
