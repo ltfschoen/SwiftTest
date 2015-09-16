@@ -61,6 +61,10 @@ class ViewController: UIViewController {
         // Delegate Object for updated events
         self.locationManager.delegate = self
 
+        /* Target-Action Pattern where Target is "self" (returns the View Controller receiver instance). "refresh:" is the Selector (Named Parameter) that searches for the "refresh" Method (where Selector conforms to StringLiteralConvertible Protocol and such may be converted directly from a String Literal)
+        */
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Refresh, target: self, action: "refresh:")
+
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -217,6 +221,20 @@ class ViewController: UIViewController {
                     }
                 }
             }
+        }
+    }
+
+    // Target-Action Pattern passes the button/control (UIBarButtonItem) that caused the "refresh" Method to run
+    func refresh(sender: UIBarButtonItem) {
+        if let location = self.lastLocation {
+            // Center Map on Location. Fetch Data of Free Wifi Hotspots when user moved and presses "refresh" button
+            self.centerMapOnLocation(location)
+            self.fetchFreeWifiHotspotsAroundLocation(location)
+        } else {
+            // Error when Location not yet obtained
+            let alert = UIAlertController(title: "Error", message: "Location not yet obtained", preferredStyle: .Alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: nil)
         }
     }
 
