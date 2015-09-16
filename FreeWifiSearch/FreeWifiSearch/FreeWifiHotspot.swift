@@ -21,6 +21,12 @@ class FreeWifiHotspot: NSObject {
     let location: CLLocationCoordinate2D
     let city: String
 
+    /* Define Computed Property of NSURL Type pointing to large picture for mandatory Facebook ID (not Optional)
+    */
+    var pictureURL: NSURL {
+        return NSURL(string: "http://graph.facebook.com/place/picture?id=\(self.fbid)" + "&type=large")!
+    }
+
     init(fbid: String, name: String, location: CLLocationCoordinate2D, city: String) {
         self.fbid = fbid
         self.name = name
