@@ -10,7 +10,20 @@
 
 import UIKit
 
+/* Custom Protocol that objects may conform with to be told when user wants to dismiss the FreeWifiHotspot Detailed View.
+*/
+@objc protocol FreeWifiHotspotControllerDelegate {
+
+    // Optional Method informs Compiler that method not need to be defined
+    optional func freeWifiHotspotViewControllerDidFinish(
+        viewController: FreeWifiHotspotViewController)
+}
+
 class FreeWifiHotspotViewController: UIViewController {
+
+    /* Declare Optional Property with 'weak' Reference (only valid for Classes, not Structs that are value types) for delegate to avoid Retain Cycles between two objects
+    */
+    weak var delegate: FreeWifiHotspotControllerDelegate?
 
     @IBOutlet var imageView: UIImageView! // Strong
     @IBOutlet var nameLabel: UILabel!
@@ -62,6 +75,13 @@ class FreeWifiHotspotViewController: UIViewController {
                 self.imageView.image = image
             })
         }
+    }
+
+    @IBAction private func back(sender: AnyObject) {
+
+        /* Optional Chaining calls Delegate Method to inform it is finished (unless Delegate Property is nil or does not implement freeWifiHotspotViewControllerDidFinish)
+        */
+        self.delegate?.freeWifiHotspotViewControllerDidFinish?(self)
     }
 
     /*

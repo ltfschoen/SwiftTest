@@ -6,7 +6,7 @@
 //  Copyright © 2015 LS. All rights reserved.
 //
 
-// Progress: Page 200
+// Progress: Page 204
 
 /* Questions:
    - Why the postfixes of "!" required in code "func mapView(mapView: MKMapView!, didFailToLocateUserWithError error: NSError!) {" on page 180?
@@ -307,20 +307,30 @@ extension ViewController: MKMapViewDelegate {
         }
     }
 
-    // Map View Delegate called when Map View needs a view returned to display an annotation
+    /* Map View Delegate called when Map View needs a view returned to display an annotation (button in callout accessory that requires handling when user taps button using calloutAccessoryControlTapped)
+    */
     func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
 
+        /* Conditional Downcast to only handle FreeWifiHotspot annotation Objects (not other annotations such as User Location)
+        */
         if let annotation = annotation as? FreeWifiHotspot {
             let identifier = "pin"
             var view: MKPinAnnotationView
 
+            /* Attemping to dequeue existing annotation in a Reuse Queue (avoid unnecessary recreate annotations coming into view).
+               Conditional Downcast ensures view type MKPInAnnotationView
+            */
             if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
 
+                /* Case where a view is dequeued. Set annotation only on the view that is dequeued
+                */
                 dequeuedView.annotation = annotation
                 view = dequeuedView
 
             } else {
 
+                /* Case where no view is dequeued. Create new MKPinAnnotationView. Setup to show button as callout accessory.
+                */
                 view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 view.canShowCallout = true
                 view.calloutOffset = CGPoint(x: -5, y: 5)
@@ -333,4 +343,36 @@ extension ViewController: MKMapViewDelegate {
         return nil
     }
 
+    // Method called to handle when user taps button in callout accessory
+    func mapView(mapView: MKMapView!, annotationView view: MKAnnotationView!, calloutAccessoryControlTapped control: UIControl!) {
+
+        /* Create new instance of FreeWifiHotspotViewController using Storyboard ID already set. Conditional Optional Unwrapping to account for failure (where nil returned)
+        */
+        if let viewController = self.storyboard!.instantiateViewControllerWithIdentifier("FreeWifiHotspotView") as? FreeWifiHotspotViewController {
+
+            /* Check annotation from tapped view is FreeWifiHotspot Object explicitly since type of annotation is MKAnnotation (Compiler does not know this)
+            */
+            if let freeWifiHotspot = view.annotation as? FreeWifiHotspot {
+                // Setup ViewController
+                viewController.freeWifiHotspot = freeWifiHotspot
+
+                /* Declare ViewController Instance using Custom Definition of FreeWifiHotspotViewController Delegate (in FreeWifiHotspotViewController.swift). Use the Delegate to tell the ViewController when user presses the Back Button (when finished with FreeWifiHotspotViewController)
+                */
+                viewController.delegate = self
+
+                // Present the ViewController
+                self.presentViewController(viewController, animated: true, completion: nil)
+            }
+        }
+    }
+
+}
+
+/* Declare Conformance to Custom Protocol (using Delegate Pattern) and Implement its Optional Method (to dismiss the ViewController when user presses the Back button)
+*/
+extension ViewController: FreeWifiHotspotControllerDelegate {
+
+    func freeWifiHotspotViewControllerDidFinish(viewController: FreeWifiHotspotViewController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 }
