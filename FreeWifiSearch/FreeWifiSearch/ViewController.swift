@@ -6,7 +6,7 @@
 //  Copyright © 2015 LS. All rights reserved.
 //
 
-// Progress: Page 183
+// Progress: Page 200
 
 /* Questions:
    - Why the postfixes of "!" required in code "func mapView(mapView: MKMapView!, didFailToLocateUserWithError error: NSError!) {" on page 180?
@@ -305,6 +305,32 @@ extension ViewController: MKMapViewDelegate {
             self.centerMapOnLocation(newLocation!)
             self.fetchFreeWifiHotspotsAroundLocation(newLocation!)
         }
+    }
+
+    // Map View Delegate called when Map View needs a view returned to display an annotation
+    func mapView(mapView: MKMapView!, viewForAnnotation annotation: MKAnnotation!) -> MKAnnotationView! {
+
+        if let annotation = annotation as? FreeWifiHotspot {
+            let identifier = "pin"
+            var view: MKPinAnnotationView
+
+            if let dequeuedView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView {
+
+                dequeuedView.annotation = annotation
+                view = dequeuedView
+
+            } else {
+
+                view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                view.canShowCallout = true
+                view.calloutOffset = CGPoint(x: -5, y: 5)
+                view.rightCalloutAccessoryView = UIButton(type:.DetailDisclosure) as UIView
+            }
+
+            return view
+        }
+
+        return nil
     }
 
 }

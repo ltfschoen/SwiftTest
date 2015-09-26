@@ -1,0 +1,5 @@
+xcodeproj '/Users/Ls/code/swift/FreeWifiSearch/FreeWifiSearch.xcodeproj'
+pod "FBSDKCoreKit";
+pod "FBSDKLoginKit";
+pod "FBSDKShareKit";
+pod "FBSDKMessengerShareKit";

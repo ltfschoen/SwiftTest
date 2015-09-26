@@ -12,5 +12,9 @@
 /* Import Facebook SDK so Swift recognises its referenced methods and Objective-C classes
 */
 #import <FacebookSDK/FacebookSDK.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKMessengerShareKit/FBSDKMessengerShareKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 #endif /* FreeWifiSearchObjCBridging_h */
