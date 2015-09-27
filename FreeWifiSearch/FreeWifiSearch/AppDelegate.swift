@@ -17,12 +17,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
 
         print("AppDelegate.swift - Loading app overrides")
-        /* Call Facebook SDK with method to set App ID for use with the app. Swift recognises the Facebook SDK method due to use of Bridging Header. Alternatively store in plist file.
+        /* Swift recognises the Facebook SDK method due to use of Bridging Header. Store Facebook App ID Settings in plist file.
         */
-//        FBSettings.setDefaultAppID("INSERT_FB_APP_ID")
-        FBSettings.setDefaultAppID("1632498363706464")
-
-        return true
+        return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     /* Facebook SDK fast app switching to login to Facebook app and Safari fallback.
@@ -35,12 +32,32 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     {
         print("AppDelegate.swift - Checking if FB wasHandled...")
         
-        let wasHandled =
-        FBAppCall.handleOpenURL(url, sourceApplication: sourceApplication)
-        
-        print("AppDelegate.swift - FB wasHandled is: \(wasHandled)")
-        
-        return wasHandled
+        /* 6. Connect Application Delegate https://developers.facebook.com/docs/ios/getting-started
+        */
+        // Ensure Facebook SDK only sees URLs intended for it
+//        let isFacebookURL = url.scheme != nil && url.scheme.hasPrefix("fb\(FBSDKSettings.appID())") && url.host == "authorize"
+
+        // http://stackoverflow.com/questions/30729011/swift-2-migration-savecontext-in-appdelegate
+        // https://gist.github.com/scottdelly/135b35966b1a8de8d2d0
+        if url.scheme != "" {
+            do {
+                try url.scheme.hasPrefix("fb\(FBSDKSettings.appID())")
+
+                do {
+                    try url.host == "authorize"
+
+                    return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+                } catch let error as NSError {
+                    NSLog("Unresolved error \(error), \(error.userInfo)")
+                    // Handle Error
+                    return false
+                }
+            } catch let error as NSError {
+                NSLog("Unresolved error \(error), \(error.userInfo)")
+                // Handle Error
+                return false
+            }
+        }
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -59,8 +76,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationDidBecomeActive(application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+
+        /* 7. Add App Events https://developers.facebook.com/docs/ios/getting-started
+        */
+        FBSDKAppEvents.activateApp()
     }
-    
+
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
