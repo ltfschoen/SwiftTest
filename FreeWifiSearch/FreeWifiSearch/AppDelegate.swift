@@ -58,6 +58,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return false
             }
         }
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {

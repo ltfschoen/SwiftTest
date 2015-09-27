@@ -38,7 +38,10 @@ class ViewController: UIViewController {
     /* Property Declarations that hook variables in Interface Builder (IB). IBOutlets are set implicitly unwrapped as Optional Type prefixed with ! (so IBOutlets may be used without checking for nil but runtime crash will occur if value is nil) since IB supplies Views at Runtime the Swift Compiler does not know and would give error that variables values not set in all initializers, so do not use an IBOutlet before the View of the ViewController has loaded. IBOutlets are declared as weak by default since the View of a ViewController holds Strong References to its outlets
     */
     @IBOutlet weak var mapView: MKMapView!
-    @IBOutlet weak var loginView: FBLoginView! // FBLoginView instead of UIView
+//    @IBOutlet weak var loginView: FBLoginView! // FBLoginView instead of UIView
+
+    // https://developers.facebook.com/docs/facebook-login/ios
+    @IBOutlet weak var loginButton: FBSDKLoginButton?
 
     private var locationManager: CLLocationManager!
 
@@ -50,11 +53,36 @@ class ViewController: UIViewController {
     */
     private var freeWifiHotspots = [FreeWifiHotspot]()
 
+    let facebookReadPermissions = ["public_profile", "email", "user_friends"]
+
     override func viewDidLoad() {
 
         print("ViewController.swift - Loading viewDidLoad overrides")
 
         super.viewDidLoad()
+
+        /* Facebook Login Guides:
+            - Swift version https://www.veasoftware.com/tutorials/2015/6/11/facebook-login-in-swift-xcode-63-ios-83-tutorial
+            - Old Objc-C version https://developers.facebook.com/docs/facebook-login/ios
+        */
+        if (FBSDKAccessToken.currentAccessToken() == nil) {
+            print("Not logged in...")
+        } else {
+            print("Logged in...")
+        }
+
+        // Add Facebook Login Button
+        let loginButton = FBSDKLoginButton()
+
+        /* Ask User for additional Read Permissions when Facebook Login Button used with readPermissions Property
+        */
+        loginButton.readPermissions = self.facebookReadPermissions
+
+        // Place the Login Button in center of view
+        loginButton.center = self.view.center
+        self.view.addSubview(loginButton)
+
+        loginButton.addTarget(self, action: "loginButtonClicked:", forControlEvents: UIControlEvents.TouchUpInside)
 
         self.locationManager = CLLocationManager()
 
@@ -93,6 +121,50 @@ class ViewController: UIViewController {
         }
     }
 
+//    // Show Login Dialog when Login Button is clicked
+////    // https://www.veasoftware.com/tutorials/2015/6/11/facebook-login-in-swift-xcode-63-ios-83-tutorial
+//    private func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+//
+//        if error == nil {
+//            print("Login Complete...")
+//
+//            self.performSegueWithIdentifier("showNew", sender: self)
+//        } else {
+//            print(error.localizedDescription)
+//        }
+//    }
+//
+//    private func loginButtonDidLogout(loginButton: FBSDKLoginButton!) {
+//        print("User Logged Out...")
+//    }
+
+    func loginButtonClicked(sender: UIControlEvents) {
+        let login = FBSDKLoginManager()
+
+        login.logInWithReadPermissions(facebookReadPermissions, fromViewController: self) { (result: FBSDKLoginManagerLoginResult!, error: NSError?) -> Void in
+            if error != nil {
+                print("Login Process Error: \(error!.localizedDescription)")
+
+                // Process Error
+                FBSDKLoginManager().logOut()
+
+            } else if (result.isCancelled) {
+                print("Login Process Cancelled...")
+
+                // Handle Cancellations
+                FBSDKLoginManager().logOut()
+
+            } else {
+                print("Logged In...")
+
+                // TODO - Check all of multiple permissions granted and none missing
+
+//                self.performSegueWithIdentifier("showNew", sender: self)
+
+            }
+        }
+    }
+
     // Centers Map View on location passed in as a parameter
     private func centerMapOnLocation(location: CLLocation) {
 
@@ -112,7 +184,7 @@ class ViewController: UIViewController {
     */
     private func fetchFreeWifiHotspotsAroundLocation(location: CLLocation) {
 
-        if !FBSession.activeSession().isOpen {
+        if FBSDKAccessToken.currentAccessToken() == nil {
 
             print("ViewController.swift - No Facebook Session detected")
 
@@ -135,7 +207,7 @@ class ViewController: UIViewController {
         */
         var urlString = "https://graph.facebook.com/v2.0/search/"
         urlString += "?access_token="
-        urlString += "\(FBSession.activeSession().accessTokenData.accessToken)"
+        urlString += "\(FBSDKAccessToken.currentAccessToken())"
         urlString += "&type=place"
         urlString += "&q=wifi"
         urlString += "&center=\(location.coordinate.latitude),"
