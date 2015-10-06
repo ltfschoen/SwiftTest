@@ -35,10 +35,23 @@ class Board {
     */
     subscript(location: BoardLocation) -> BoardCellState {
         get {
+            // Terminate app if this condition fails
+            assert(isWithinBounds(location), "row or column index out of bounds")
+
             return cells[location.row * boardSize + location.column]
         }
         set {
+            // Terminate app if this condition fails
+            assert(isWithinBounds(location), "row or column index out of bounds")
+
+            /* Swift uses a 1D array to store cells (performance improvement over using a 2D array)
+            */
             cells[location.row * boardSize + location.column] = newValue
         }
+    }
+
+    // Check validity of the row and column for a board location
+    func isWithinBounds(location: BoardLocation) -> Bool {
+        return location.row >= 0 && location.row < boardSize && location.column >= 0 && location.column < boardSize
     }
 }
