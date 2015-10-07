@@ -37,11 +37,23 @@ class ReversiTests: XCTestCase {
         let board = Board()
 
         // Set the state of a cell on the board
-        board[4, 5] = BoardCellState.White
-        
+        board[4,5] = BoardCellState.White
+
         // Get the state of the cell to Verify
-        let retrievedState = board[4, 5];
+        let retrievedState = board[4, 5]
         XCTAssertEqual(BoardCellState.White, retrievedState, "The cell should have been white!");
+    }
+
+    func test_clearBoard_cellStateIsChanged() {
+        let board = Board()
+
+        board[1,2] = BoardCellState.Black
+
+        // Clear all board cells into the Empty state
+        board.clearBoard()
+
+        let retrievedState = board[1,2]
+        XCTAssertEqual(BoardCellState.Empty, retrievedState, "The cell should have been cleared!")
     }
     
 }
