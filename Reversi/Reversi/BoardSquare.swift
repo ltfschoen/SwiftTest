@@ -13,8 +13,10 @@ import UIKit
 class BoardSquare: UIView {
     private let board: ReversiBoard
     private let location: BoardLocation
-    private let blackView: UIImageView // Image View Container
-    private let whiteView: UIImageView
+    private let blackImageView: UIImageView // Image View Container
+    private let whiteImageView: UIImageView
+    let boardCellSize: CGFloat
+    let boardHeightCenter: CGFloat
 
     required init(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -22,24 +24,34 @@ class BoardSquare: UIView {
 
     // Create required UI elements using various arguments
     init(frame: CGRect, board: ReversiBoard, location: BoardLocation) {
+
         self.board = board
         self.location = location
 
-        let blackImage = UIImage(named: "ReversiBlackPiece.png")
-        blackView = UIImageView(image: blackImage)
-        blackView.alpha = 0
+        self.boardCellSize = CGFloat(UIScreen.mainScreen().bounds.size.width / 8)
+        self.boardHeightCenter = CGFloat((UIScreen.mainScreen().bounds.size.height / 8) * 2)
 
+        print("height of screen bounds \(boardHeightCenter)")
+
+        self.blackImageView = UIImageView(frame: CGRectMake(0, self.boardHeightCenter, boardCellSize, boardCellSize));
+        let blackImage = UIImage(named: "ReversiBlackPiece.png")
+        blackImageView.image = blackImage
+        blackImageView.alpha = 0
+
+        print("height of blackImageView \(blackImageView.bounds.size.height)")
+
+        self.whiteImageView = UIImageView(frame: CGRectMake(0, self.boardHeightCenter, boardCellSize, boardCellSize));
         let whiteImage = UIImage(named: "ReversiWhitePiece.png")
-        whiteView = UIImageView(image: whiteImage)
-        whiteView.alpha = 0
+        whiteImageView.image = whiteImage
+        whiteImageView.alpha = 0
 
         // Initialise and return view object with specified frame
         super.init(frame: frame)
 
         backgroundColor = UIColor.clearColor()
 
-        addSubview(blackView)
-        addSubview(whiteView)
+        addSubview(blackImageView)
+        addSubview(whiteImageView)
 
         update()
     }
@@ -48,7 +60,7 @@ class BoardSquare: UIView {
     */
     private func update() {
         let state = board[location]
-        whiteView.alpha = state == BoardCellState.White ? 1.0 : 0.0
-        blackView.alpha = state == BoardCellState.Black ? 1.0 : 0.0
+        whiteImageView.alpha = state == BoardCellState.White ? 1.0 : 0.0
+        blackImageView.alpha = state == BoardCellState.Black ? 1.0 : 0.0
     }
 }
