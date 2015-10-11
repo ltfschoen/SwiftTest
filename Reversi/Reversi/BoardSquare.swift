@@ -33,14 +33,14 @@ class BoardSquare: UIView {
 
         print("height of screen bounds \(boardHeightCenter)")
 
-        self.blackImageView = UIImageView(frame: CGRectMake(0, self.boardHeightCenter, boardCellSize, boardCellSize));
+        self.blackImageView = UIImageView(frame: CGRectMake(0, self.boardHeightCenter - boardCellSize, boardCellSize, boardCellSize));
         let blackImage = UIImage(named: "ReversiBlackPiece.png")
         blackImageView.image = blackImage
         blackImageView.alpha = 0
 
         print("height of blackImageView \(blackImageView.bounds.size.height)")
 
-        self.whiteImageView = UIImageView(frame: CGRectMake(0, self.boardHeightCenter, boardCellSize, boardCellSize));
+        self.whiteImageView = UIImageView(frame: CGRectMake(0, self.boardHeightCenter - boardCellSize, boardCellSize, boardCellSize));
         let whiteImage = UIImage(named: "ReversiWhitePiece.png")
         whiteImageView.image = whiteImage
         whiteImageView.alpha = 0
