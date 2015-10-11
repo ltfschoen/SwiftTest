@@ -66,6 +66,12 @@ class ReversiBoard: Board {
     */
     func makeMove(location: BoardLocation) {
         self[location] = nextMove
+
+        // Flip any pieces that are surrounded in any of the eight directions
+        for direction in MoveDirection.directions {
+            flipOpponentsCounters(location, direction: direction, toState: nextMove)
+        }
+
         nextMove = nextMove.invert()
     }
 
@@ -105,6 +111,27 @@ class ReversiBoard: Board {
         }
 
         return false
+    }
+
+    // Flip pieces surrounded by pieces of the opposite colour
+    private func flipOpponentsCounters(location: BoardLocation, direction: MoveDirection, toState: BoardCellState) {
+
+        // Check whether valid move
+        if !moveSurroundsCounters(location, direction: direction, toState: toState) {
+            return
+        }
+
+        let opponentsState = toState.invert()
+        var currentState = BoardCellState.Empty
+        var currentLocation = location
+
+        /* Flip opponent pieces until edge of board reached or until a piece with the current state is reached
+        */
+        repeat {
+            currentLocation = direction.move(currentLocation)
+            currentState = self[currentLocation]
+            self[currentLocation] = toState
+        } while (isWithinBounds(currentLocation) && currentState == opponentsState)
     }
 
 }
