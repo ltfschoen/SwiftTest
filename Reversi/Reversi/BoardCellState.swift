@@ -12,4 +12,21 @@ import Foundation
 */
 enum BoardCellState {
     case Empty, Black, White
+
+    // MARK: Game Logic
+    
+    // Switch from black to white and vice versa
+    func invert() -> BoardCellState {
+        if self == Black {
+            return White
+        } else if self == White {
+            return Black
+        }
+        
+        assert(self != Empty, "cannot invert empty state")
+        
+        return Empty
+    }
+
+    // TODO: Convenience Method to swap between player turn
 }
