@@ -58,6 +58,13 @@ class BoardSquare: UIView, BoardDelegate {
         /* Add the BoardSquare class instance as a multicast delegate (since it conforms to BoardDelegate Protocol) so it will be notified when a cell state changes
         */
         board.addDelegate(self)
+
+        // MARK: Tap Gestures
+        let tapRecogniser = UITapGestureRecognizer(target: self, action: "cellTapped")
+
+        /* Add tap gesture recognizer to view that invokes 'cellTapped' Function when the gesture occurs
+        */
+        addGestureRecognizer(tapRecogniser)
     }
 
     /* Update alpha (visibility) of white and black counter images based on state of cell associated with the instance
@@ -73,6 +80,17 @@ class BoardSquare: UIView, BoardDelegate {
     func cellStateChanged(location: BoardLocation) {
         if self.location == location {
             update()
+        }
+    }
+
+    // Handle the tap recogniser when user taps on a square
+    func cellTapped() {
+
+        // Check if valid move
+        if board.isValidMove(location) {
+
+            // Perform move. Set cell state to black or white
+            board.makeMove(location)
         }
     }
 }
