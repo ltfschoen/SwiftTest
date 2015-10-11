@@ -18,3 +18,9 @@ struct BoardLocation {
         self.column = column
     }
 }
+
+/* Public method (in global scope) to provide an Equality Operator and adopt the Equatable Protocol that defines a single function (equals operator ==). It considers two BoardLocation instances equal when having same row and column. Avoids error "Binary operation '==' cannot be applied to two BoardLocation operands"
+*/
+func == (lhs: BoardLocation, rhs: BoardLocation) -> Bool {
+    return lhs.row == rhs.row && lhs.column == rhs.column
+}

@@ -12,8 +12,14 @@ import Foundation
 */
 
 class Board {
+
     private var cells: [BoardCellState]
+
     let boardSize = 8
+
+    /* Type parameter ensures only delegates implementing the BoardDelegate Protocol may be added to Multicast Array
+    */
+    private let boardDelegates = DelegateMulticast<BoardDelegate>()
 
     init () {
         /* Create array of cells and populate each cell with the BoardCellState.Empty value
@@ -47,6 +53,10 @@ class Board {
             /* Swift uses a 1D array to store cells (performance improvement over using a 2D array)
             */
             cells[location.row * boardSize + location.column] = newValue
+
+            /* Inform by multicasting to multiple delegates when the board state changes using a closure that invokes the cellStateChanged delegate method on the BoardDelegate argument passed into the inline closure
+            */
+            boardDelegates.invokeDelegates { $0.cellStateChanged(location) }
         }
     }
 
@@ -70,5 +80,10 @@ class Board {
         /* Invoke cellVisitor Fn passing closure as argument for each board cell (BoardLocation) iteration with the $0 argument (shorthand notation) to set all cells to value of Empty
         */
         cellVisitor { self[$0] = .Empty }
+    }
+
+    // Public method allows classes to add themself as delegates to the Board
+    func addDelegate(delegate: BoardDelegate) {
+        boardDelegates.addDelegate(delegate)
     }
 }
