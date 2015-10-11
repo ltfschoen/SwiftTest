@@ -9,8 +9,8 @@
 import Foundation
 import UIKit
 
-// Subclass of UIView for rendering an individual single board cell
-class BoardSquare: UIView {
+// Subclass of UIView for rendering an individual single board cell. Conformance to Custom BoardDelegate Protocol
+class BoardSquare: UIView, BoardDelegate {
     private let board: ReversiBoard
     private let location: BoardLocation
     private let blackImageView: UIImageView // Image View Container
@@ -54,6 +54,10 @@ class BoardSquare: UIView {
         addSubview(whiteImageView)
 
         update()
+
+        /* Add the BoardSquare class instance as a multicast delegate (since it conforms to BoardDelegate Protocol) so it will be notified when a cell state changes
+        */
+        board.addDelegate(self)
     }
 
     /* Update alpha (visibility) of white and black counter images based on state of cell associated with the instance
@@ -62,5 +66,13 @@ class BoardSquare: UIView {
         let state = board[location]
         whiteImageView.alpha = state == BoardCellState.White ? 1.0 : 0.0
         blackImageView.alpha = state == BoardCellState.Black ? 1.0 : 0.0
+    }
+
+    /* Delegate method implementation to comply with BoardDelegate Protocol to ensure the view is only updated when associated cell state changes
+    */
+    func cellStateChanged(location: BoardLocation) {
+        if self.location == location {
+            update()
+        }
     }
 }
