@@ -35,10 +35,31 @@ class ReversiBoard: Board {
 
     // MARK: Game Logic
 
-    /* Determine if player can move to a particular location on board (i.e. an Empty cell)
+//    /* Determine if player can move to a particular location on board (i.e. an Empty cell)
+//    */
+//    func isValidMove(location: BoardLocation) -> Bool {
+//        return self[location] == BoardCellState.Empty
+//    }
+
+    /* Check condition that cell at given location is empty. Check additionally using the MoveDirections.directions array to iterate over all possible directions (until find one and return true) whereby this move could surround one or more opponent pieces
     */
     func isValidMove(location: BoardLocation) -> Bool {
-        return self[location] == BoardCellState.Empty
+        return isValidMove(location, toState: nextMove)
+    }
+
+    private func isValidMove(location: BoardLocation, toState: BoardCellState) -> Bool {
+        // Check if the cell is empty
+        if self[location] != BoardCellState.Empty {
+            return false
+        }
+
+        // Check if the move surrounds one or more of the opponents pieces
+        for direction in MoveDirection.directions {
+            if moveSurroundsCounters(location, direction: direction, toState: toState) {
+                return true
+            }
+        }
+        return false
     }
 
     /* Set the cell at given location to current player's color and uses invert() to switch to the other player's turn
@@ -47,4 +68,43 @@ class ReversiBoard: Board {
         self[location] = nextMove
         nextMove = nextMove.invert()
     }
+
+    /* Check if a move to a specific location on the board will surround one or more of the opponent pieces (i.e. valid move)
+    */
+    private func moveSurroundsCounters(location: BoardLocation, direction: MoveDirection, toState: BoardCellState) -> Bool {
+        var index = 1
+
+        // Advance to next cell
+        var currentLocation = direction.move(location)
+
+        while isWithinBounds(currentLocation) {
+
+            let currentState = self[currentLocation]
+
+            if index == 1 {
+                // Cell neighbouring must be occupied by piece of opposing colour
+                if currentState != toState.invert() {
+                    return false
+                }
+            } else {
+                // Valid move if we have reached a cell of the same colour
+                if currentState == toState {
+                    return true
+                }
+
+                // Fail if we have reached an empty cell
+                if currentState == BoardCellState.Empty {
+                    return false
+                }
+            }
+
+            index++
+
+            // Advance to next cell
+            currentLocation = direction.move(currentLocation)
+        }
+
+        return false
+    }
+
 }
