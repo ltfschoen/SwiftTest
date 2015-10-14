@@ -43,6 +43,14 @@ class ViewController: UIViewController {
         omniLightNode.position = SCNVector3Make(0, 50, 50) // Positioned above and infront
         scene.rootNode.addChildNode(omniLightNode)
 
+        // Add default camera (non-Customisable)
+        let cameraNode = SCNNode()
+        cameraNode.camera = SCNCamera()
+        cameraNode.camera?.usesOrthographicProjection = false // Default is Perspective projection
+        cameraNode.camera?.orthographicScale = 0.8
+        cameraNode.position = SCNVector3Make(1, 2, 15) // Positioned infront
+        scene.rootNode.addChildNode(cameraNode)
+
         let boxGeometry = SCNBox(width: 10.0,
             height: 10.0,
             length: 10.0,
@@ -54,8 +62,8 @@ class ViewController: UIViewController {
         
         scnView.scene = scene
 
-        // Enable default lighting
-        scnView.autoenablesDefaultLighting = true
+        // Enable default lighting (not required when ambient and point lighting already setup)
+//        scnView.autoenablesDefaultLighting = true
 
         // Enable camera controls
         scnView.allowsCameraControl = true
