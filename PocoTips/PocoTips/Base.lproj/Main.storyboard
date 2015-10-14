@@ -45,18 +45,27 @@
                                             <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                         </variation>
                                     </label>
+                                    <sceneKitView clipsSubviews="YES" multipleTouchEnabled="YES" alpha="0.5" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yt8-pA-llP" userLabel="Scene">
+                                        <rect key="frame" x="180" y="138" width="240" height="128"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </sceneKitView>
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="trailingMargin" secondItem="ev2-qk-ZGc" secondAttribute="trailing" constant="10" id="3L3-nD-1nG"/>
                                     <constraint firstItem="ev2-qk-ZGc" firstAttribute="centerX" secondItem="Rxe-p0-L1S" secondAttribute="centerX" id="BOv-Ph-Ded"/>
+                                    <constraint firstItem="Yt8-pA-llP" firstAttribute="width" secondItem="Rxe-p0-L1S" secondAttribute="width" id="CaC-MM-M3M"/>
                                     <constraint firstItem="Ovf-7E-j9S" firstAttribute="centerX" secondItem="Rxe-p0-L1S" secondAttribute="centerX" id="Cew-55-Y8s"/>
+                                    <constraint firstAttribute="bottom" secondItem="ev2-qk-ZGc" secondAttribute="bottom" constant="10" id="Lxg-hx-sFL"/>
                                     <constraint firstItem="ev2-qk-ZGc" firstAttribute="width" secondItem="Rxe-p0-L1S" secondAttribute="width" id="MkY-nt-tOR"/>
                                     <constraint firstAttribute="bottom" secondItem="ev2-qk-ZGc" secondAttribute="bottom" constant="10" id="NQ3-cM-SGz"/>
                                     <constraint firstItem="Ovf-7E-j9S" firstAttribute="width" secondItem="Rxe-p0-L1S" secondAttribute="width" id="OW5-8x-503"/>
+                                    <constraint firstItem="Yt8-pA-llP" firstAttribute="centerX" secondItem="Rxe-p0-L1S" secondAttribute="centerX" id="WsE-5R-Ksz"/>
+                                    <constraint firstItem="ev2-qk-ZGc" firstAttribute="top" secondItem="Yt8-pA-llP" secondAttribute="bottom" constant="-5" id="bhv-04-Hi6"/>
                                     <constraint firstAttribute="trailing" secondItem="Ovf-7E-j9S" secondAttribute="trailing" constant="10" id="ggX-tD-Uuh"/>
                                     <constraint firstItem="Ovf-7E-j9S" firstAttribute="top" secondItem="Rxe-p0-L1S" secondAttribute="top" constant="10" id="hqa-KH-jxx"/>
                                     <constraint firstItem="Ovf-7E-j9S" firstAttribute="leading" secondItem="Rxe-p0-L1S" secondAttribute="leading" constant="10" id="ikA-zR-LB8"/>
+                                    <constraint firstItem="Yt8-pA-llP" firstAttribute="top" secondItem="Ovf-7E-j9S" secondAttribute="top" constant="-10" id="qCk-SZ-j6b"/>
                                     <constraint firstItem="ev2-qk-ZGc" firstAttribute="leading" secondItem="Rxe-p0-L1S" secondAttribute="leading" constant="10" id="siu-bL-BFF"/>
                                 </constraints>
                                 <variation key="default">
@@ -64,6 +73,7 @@
                                         <exclude reference="ggX-tD-Uuh"/>
                                         <exclude reference="ikA-zR-LB8"/>
                                         <exclude reference="3L3-nD-1nG"/>
+                                        <exclude reference="NQ3-cM-SGz"/>
                                         <exclude reference="siu-bL-BFF"/>
                                     </mask>
                                 </variation>
@@ -113,6 +123,9 @@
                             </mask>
                         </variation>
                     </view>
+                    <connections>
+                        <outlet property="scnView" destination="Yt8-pA-llP" id="7l0-WW-7e0"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

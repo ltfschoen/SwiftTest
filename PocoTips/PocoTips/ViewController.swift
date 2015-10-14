@@ -7,12 +7,58 @@
 //
 
 import UIKit
+import SceneKit
 
 class ViewController: UIViewController {
+
+    @IBOutlet weak var scnView: SCNView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+    }
+
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+
+        sceneSetup()
+    }
+
+    // MARK: Scene
+    func sceneSetup() {
+        let scene = SCNScene()
+
+        // Add ambient lighting (constant intensity from all directions with 30% white colour
+        let ambientLightNode = SCNNode()
+        ambientLightNode.light = SCNLight()
+        ambientLightNode.light!.type = SCNLightTypeAmbient
+        ambientLightNode.light!.color = UIColor(white: 0.3, alpha: 1.0)
+        scene.rootNode.addChildNode(ambientLightNode)
+
+        // Add point lighting
+        let omniLightNode = SCNNode()
+        omniLightNode.light = SCNLight()
+        omniLightNode.light!.type = SCNLightTypeOmni
+        omniLightNode.light!.color = UIColor(white: 0.75, alpha: 1.0)
+        omniLightNode.position = SCNVector3Make(0, 50, 50) // Positioned above and infront
+        scene.rootNode.addChildNode(omniLightNode)
+
+        let boxGeometry = SCNBox(width: 10.0,
+            height: 10.0,
+            length: 10.0,
+            chamferRadius: 1.0)
+        
+        let boxNode = SCNNode(geometry: boxGeometry)
+
+        scene.rootNode.addChildNode(boxNode)
+        
+        scnView.scene = scene
+
+        // Enable default lighting
+        scnView.autoenablesDefaultLighting = true
+
+        // Enable camera controls
+        scnView.allowsCameraControl = true
     }
 
     override func didReceiveMemoryWarning() {
