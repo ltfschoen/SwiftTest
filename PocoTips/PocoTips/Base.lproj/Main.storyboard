@@ -3,6 +3,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8135.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -26,8 +27,8 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rxe-p0-L1S" userLabel="TextContainer">
                                 <rect key="frame" x="0.0" y="260" width="600" height="340"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Peru" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ovf-7E-j9S">
-                                        <rect key="frame" x="114" y="10" width="373" height="237"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Peru" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Ovf-7E-j9S">
+                                        <rect key="frame" x="-318" y="10" width="1236" height="237"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="200"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -35,8 +36,8 @@
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="125"/>
                                         </variation>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Info box sample may clip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ev2-qk-ZGc">
-                                        <rect key="frame" x="45" y="240" width="800" height="90"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Info box sample may clip" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="ev2-qk-ZGc">
+                                        <rect key="frame" x="0.0" y="240" width="600" height="90"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="75"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -47,11 +48,25 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
+                                    <constraint firstAttribute="trailingMargin" secondItem="ev2-qk-ZGc" secondAttribute="trailing" constant="10" id="3L3-nD-1nG"/>
                                     <constraint firstItem="ev2-qk-ZGc" firstAttribute="centerX" secondItem="Rxe-p0-L1S" secondAttribute="centerX" id="BOv-Ph-Ded"/>
                                     <constraint firstItem="Ovf-7E-j9S" firstAttribute="centerX" secondItem="Rxe-p0-L1S" secondAttribute="centerX" id="Cew-55-Y8s"/>
+                                    <constraint firstItem="ev2-qk-ZGc" firstAttribute="width" secondItem="Rxe-p0-L1S" secondAttribute="width" id="MkY-nt-tOR"/>
                                     <constraint firstAttribute="bottom" secondItem="ev2-qk-ZGc" secondAttribute="bottom" constant="10" id="NQ3-cM-SGz"/>
+                                    <constraint firstItem="Ovf-7E-j9S" firstAttribute="width" secondItem="Rxe-p0-L1S" secondAttribute="width" id="OW5-8x-503"/>
+                                    <constraint firstAttribute="trailing" secondItem="Ovf-7E-j9S" secondAttribute="trailing" constant="10" id="ggX-tD-Uuh"/>
                                     <constraint firstItem="Ovf-7E-j9S" firstAttribute="top" secondItem="Rxe-p0-L1S" secondAttribute="top" constant="10" id="hqa-KH-jxx"/>
+                                    <constraint firstItem="Ovf-7E-j9S" firstAttribute="leading" secondItem="Rxe-p0-L1S" secondAttribute="leading" constant="10" id="ikA-zR-LB8"/>
+                                    <constraint firstItem="ev2-qk-ZGc" firstAttribute="leading" secondItem="Rxe-p0-L1S" secondAttribute="leading" constant="10" id="siu-bL-BFF"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="ggX-tD-Uuh"/>
+                                        <exclude reference="ikA-zR-LB8"/>
+                                        <exclude reference="3L3-nD-1nG"/>
+                                        <exclude reference="siu-bL-BFF"/>
+                                    </mask>
+                                </variation>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="flag_peru" translatesAutoresizingMaskIntoConstraints="NO" id="7NZ-Id-HCO">
                                 <rect key="frame" x="150" y="40" width="300" height="200"/>
