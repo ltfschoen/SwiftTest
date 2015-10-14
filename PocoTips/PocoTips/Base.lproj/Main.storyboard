@@ -124,6 +124,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="scnLabel" destination="ev2-qk-ZGc" id="FPJ-Po-mwq"/>
                         <outlet property="scnView" destination="Yt8-pA-llP" id="7l0-WW-7e0"/>
                     </connections>
                 </viewController>
