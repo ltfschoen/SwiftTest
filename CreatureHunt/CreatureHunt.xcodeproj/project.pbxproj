@@ -1,0 +1,515 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3D31E3FD1B7F3BCB007B0D84 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E3FC1B7F3BCB007B0D84 /* AppDelegate.swift */; };
+		3D31E3FF1B7F3BCB007B0D84 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E3FE1B7F3BCB007B0D84 /* ViewController.swift */; };
+		3D31E4021B7F3BCB007B0D84 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D31E4001B7F3BCB007B0D84 /* Main.storyboard */; };
+		3D31E4041B7F3BCB007B0D84 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D31E4031B7F3BCB007B0D84 /* Assets.xcassets */; };
+		3D31E4071B7F3BCB007B0D84 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D31E4051B7F3BCB007B0D84 /* LaunchScreen.storyboard */; };
+		3D31E4121B7F3BCB007B0D84 /* CreatureHuntTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E4111B7F3BCB007B0D84 /* CreatureHuntTests.swift */; };
+		3D31E41D1B7F3BCB007B0D84 /* CreatureHuntUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D31E41C1B7F3BCB007B0D84 /* CreatureHuntUITests.swift */; };
+		3DDDF9201B7F529C006F20E8 /* Creature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDDF91E1B7F529C006F20E8 /* Creature.swift */; };
+		3DDDF9211B7F529C006F20E8 /* GeoLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DDDF91F1B7F529C006F20E8 /* GeoLocation.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3D31E40E1B7F3BCB007B0D84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D31E3F11B7F3BCB007B0D84 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D31E3F81B7F3BCB007B0D84;
+			remoteInfo = CreatureHunt;
+		};
+		3D31E4191B7F3BCB007B0D84 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3D31E3F11B7F3BCB007B0D84 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3D31E3F81B7F3BCB007B0D84;
+			remoteInfo = CreatureHunt;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		3D31E3F91B7F3BCB007B0D84 /* CreatureHunt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CreatureHunt.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D31E3FC1B7F3BCB007B0D84 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3D31E3FE1B7F3BCB007B0D84 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3D31E4011B7F3BCB007B0D84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		3D31E4031B7F3BCB007B0D84 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		3D31E4061B7F3BCB007B0D84 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		3D31E4081B7F3BCB007B0D84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D31E40D1B7F3BCB007B0D84 /* CreatureHuntTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreatureHuntTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D31E4111B7F3BCB007B0D84 /* CreatureHuntTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureHuntTests.swift; sourceTree = "<group>"; };
+		3D31E4131B7F3BCB007B0D84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D31E4181B7F3BCB007B0D84 /* CreatureHuntUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CreatureHuntUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		3D31E41C1B7F3BCB007B0D84 /* CreatureHuntUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatureHuntUITests.swift; sourceTree = "<group>"; };
+		3D31E41E1B7F3BCB007B0D84 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3DDDF91E1B7F529C006F20E8 /* Creature.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Creature.swift; sourceTree = "<group>"; };
+		3DDDF91F1B7F529C006F20E8 /* GeoLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeoLocation.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3D31E3F61B7F3BCB007B0D84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D31E40A1B7F3BCB007B0D84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D31E4151B7F3BCB007B0D84 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3D31E3F01B7F3BCB007B0D84 = {
+			isa = PBXGroup;
+			children = (
+				3D31E3FB1B7F3BCB007B0D84 /* CreatureHunt */,
+				3D31E4101B7F3BCB007B0D84 /* CreatureHuntTests */,
+				3D31E41B1B7F3BCB007B0D84 /* CreatureHuntUITests */,
+				3D31E3FA1B7F3BCB007B0D84 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3D31E3FA1B7F3BCB007B0D84 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3D31E3F91B7F3BCB007B0D84 /* CreatureHunt.app */,
+				3D31E40D1B7F3BCB007B0D84 /* CreatureHuntTests.xctest */,
+				3D31E4181B7F3BCB007B0D84 /* CreatureHuntUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3D31E3FB1B7F3BCB007B0D84 /* CreatureHunt */ = {
+			isa = PBXGroup;
+			children = (
+				3DDDF91E1B7F529C006F20E8 /* Creature.swift */,
+				3DDDF91F1B7F529C006F20E8 /* GeoLocation.swift */,
+				3D31E3FC1B7F3BCB007B0D84 /* AppDelegate.swift */,
+				3D31E3FE1B7F3BCB007B0D84 /* ViewController.swift */,
+				3D31E4001B7F3BCB007B0D84 /* Main.storyboard */,
+				3D31E4031B7F3BCB007B0D84 /* Assets.xcassets */,
+				3D31E4051B7F3BCB007B0D84 /* LaunchScreen.storyboard */,
+				3D31E4081B7F3BCB007B0D84 /* Info.plist */,
+			);
+			path = CreatureHunt;
+			sourceTree = "<group>";
+		};
+		3D31E4101B7F3BCB007B0D84 /* CreatureHuntTests */ = {
+			isa = PBXGroup;
+			children = (
+				3D31E4111B7F3BCB007B0D84 /* CreatureHuntTests.swift */,
+				3D31E4131B7F3BCB007B0D84 /* Info.plist */,
+			);
+			path = CreatureHuntTests;
+			sourceTree = "<group>";
+		};
+		3D31E41B1B7F3BCB007B0D84 /* CreatureHuntUITests */ = {
+			isa = PBXGroup;
+			children = (
+				3D31E41C1B7F3BCB007B0D84 /* CreatureHuntUITests.swift */,
+				3D31E41E1B7F3BCB007B0D84 /* Info.plist */,
+			);
+			path = CreatureHuntUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3D31E3F81B7F3BCB007B0D84 /* CreatureHunt */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D31E4211B7F3BCB007B0D84 /* Build configuration list for PBXNativeTarget "CreatureHunt" */;
+			buildPhases = (
+				3D31E3F51B7F3BCB007B0D84 /* Sources */,
+				3D31E3F61B7F3BCB007B0D84 /* Frameworks */,
+				3D31E3F71B7F3BCB007B0D84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CreatureHunt;
+			productName = CreatureHunt;
+			productReference = 3D31E3F91B7F3BCB007B0D84 /* CreatureHunt.app */;
+			productType = "com.apple.product-type.application";
+		};
+		3D31E40C1B7F3BCB007B0D84 /* CreatureHuntTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D31E4241B7F3BCB007B0D84 /* Build configuration list for PBXNativeTarget "CreatureHuntTests" */;
+			buildPhases = (
+				3D31E4091B7F3BCB007B0D84 /* Sources */,
+				3D31E40A1B7F3BCB007B0D84 /* Frameworks */,
+				3D31E40B1B7F3BCB007B0D84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D31E40F1B7F3BCB007B0D84 /* PBXTargetDependency */,
+			);
+			name = CreatureHuntTests;
+			productName = CreatureHuntTests;
+			productReference = 3D31E40D1B7F3BCB007B0D84 /* CreatureHuntTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		3D31E4171B7F3BCB007B0D84 /* CreatureHuntUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3D31E4271B7F3BCB007B0D84 /* Build configuration list for PBXNativeTarget "CreatureHuntUITests" */;
+			buildPhases = (
+				3D31E4141B7F3BCB007B0D84 /* Sources */,
+				3D31E4151B7F3BCB007B0D84 /* Frameworks */,
+				3D31E4161B7F3BCB007B0D84 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D31E41A1B7F3BCB007B0D84 /* PBXTargetDependency */,
+			);
+			name = CreatureHuntUITests;
+			productName = CreatureHuntUITests;
+			productReference = 3D31E4181B7F3BCB007B0D84 /* CreatureHuntUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3D31E3F11B7F3BCB007B0D84 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = LS;
+				TargetAttributes = {
+					3D31E3F81B7F3BCB007B0D84 = {
+						CreatedOnToolsVersion = 7.0;
+					};
+					3D31E40C1B7F3BCB007B0D84 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 3D31E3F81B7F3BCB007B0D84;
+					};
+					3D31E4171B7F3BCB007B0D84 = {
+						CreatedOnToolsVersion = 7.0;
+						TestTargetID = 3D31E3F81B7F3BCB007B0D84;
+					};
+				};
+			};
+			buildConfigurationList = 3D31E3F41B7F3BCB007B0D84 /* Build configuration list for PBXProject "CreatureHunt" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3D31E3F01B7F3BCB007B0D84;
+			productRefGroup = 3D31E3FA1B7F3BCB007B0D84 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3D31E3F81B7F3BCB007B0D84 /* CreatureHunt */,
+				3D31E40C1B7F3BCB007B0D84 /* CreatureHuntTests */,
+				3D31E4171B7F3BCB007B0D84 /* CreatureHuntUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		3D31E3F71B7F3BCB007B0D84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D31E4071B7F3BCB007B0D84 /* LaunchScreen.storyboard in Resources */,
+				3D31E4041B7F3BCB007B0D84 /* Assets.xcassets in Resources */,
+				3D31E4021B7F3BCB007B0D84 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D31E40B1B7F3BCB007B0D84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D31E4161B7F3BCB007B0D84 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3D31E3F51B7F3BCB007B0D84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DDDF9211B7F529C006F20E8 /* GeoLocation.swift in Sources */,
+				3D31E3FF1B7F3BCB007B0D84 /* ViewController.swift in Sources */,
+				3D31E3FD1B7F3BCB007B0D84 /* AppDelegate.swift in Sources */,
+				3DDDF9201B7F529C006F20E8 /* Creature.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D31E4091B7F3BCB007B0D84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D31E4121B7F3BCB007B0D84 /* CreatureHuntTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3D31E4141B7F3BCB007B0D84 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D31E41D1B7F3BCB007B0D84 /* CreatureHuntUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D31E40F1B7F3BCB007B0D84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D31E3F81B7F3BCB007B0D84 /* CreatureHunt */;
+			targetProxy = 3D31E40E1B7F3BCB007B0D84 /* PBXContainerItemProxy */;
+		};
+		3D31E41A1B7F3BCB007B0D84 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3D31E3F81B7F3BCB007B0D84 /* CreatureHunt */;
+			targetProxy = 3D31E4191B7F3BCB007B0D84 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		3D31E4001B7F3BCB007B0D84 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D31E4011B7F3BCB007B0D84 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		3D31E4051B7F3BCB007B0D84 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				3D31E4061B7F3BCB007B0D84 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		3D31E41F1B7F3BCB007B0D84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		3D31E4201B7F3BCB007B0D84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		3D31E4221B7F3BCB007B0D84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CreatureHunt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukeschoen.CreatureHunt.CreatureHunt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		3D31E4231B7F3BCB007B0D84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				INFOPLIST_FILE = CreatureHunt/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukeschoen.CreatureHunt.CreatureHunt;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		3D31E4251B7F3BCB007B0D84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CreatureHuntTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukeschoen.CreatureHunt.CreatureHuntTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CreatureHunt.app/CreatureHunt";
+			};
+			name = Debug;
+		};
+		3D31E4261B7F3BCB007B0D84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = CreatureHuntTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukeschoen.CreatureHunt.CreatureHuntTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CreatureHunt.app/CreatureHunt";
+			};
+			name = Release;
+		};
+		3D31E4281B7F3BCB007B0D84 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = CreatureHuntUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukeschoen.CreatureHunt.CreatureHuntUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = CreatureHunt;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		3D31E4291B7F3BCB007B0D84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = CreatureHuntUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.lukeschoen.CreatureHunt.CreatureHuntUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = CreatureHunt;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3D31E3F41B7F3BCB007B0D84 /* Build configuration list for PBXProject "CreatureHunt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D31E41F1B7F3BCB007B0D84 /* Debug */,
+				3D31E4201B7F3BCB007B0D84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D31E4211B7F3BCB007B0D84 /* Build configuration list for PBXNativeTarget "CreatureHunt" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D31E4221B7F3BCB007B0D84 /* Debug */,
+				3D31E4231B7F3BCB007B0D84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D31E4241B7F3BCB007B0D84 /* Build configuration list for PBXNativeTarget "CreatureHuntTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D31E4251B7F3BCB007B0D84 /* Debug */,
+				3D31E4261B7F3BCB007B0D84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3D31E4271B7F3BCB007B0D84 /* Build configuration list for PBXNativeTarget "CreatureHuntUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3D31E4281B7F3BCB007B0D84 /* Debug */,
+				3D31E4291B7F3BCB007B0D84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3D31E3F11B7F3BCB007B0D84 /* Project object */;
+}
